@@ -1,0 +1,23 @@
+{
+  "name": "panelcontrol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/api/index.js",
+  "scripts": {
+    "start": "node ./src/api/index.js",
+    "dev": "nodemon ./src/api/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
