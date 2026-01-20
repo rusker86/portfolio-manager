@@ -1,5 +1,13 @@
 import express from "express"
 import path from "path"
+
+import {
+	handleCreateProfile,
+	handleGetAllProfiles,
+	handleGetLastProfile,
+	handleGetProfileById
+} from "../controller/controllerProfile.js"
+
 import { logger } from "../utils/logger.js"
 
 const routerAdmin = express()
@@ -7,9 +15,15 @@ const routerAdmin = express()
 routerAdmin.set("view engine", "ejs")
 routerAdmin.set("views", path.join(process.cwd(), "view"))
 
-routerAdmin.get("/panel", (req, res) => {
+routerAdmin.get("/panel", async (req, res) => {
 	try {
-		res.render("admin")
+		const lastProfile = await handleGetLastProfile()
+
+		res.render("admin", {
+			bio: lastProfile.bio || "",
+			about: lastProfile.about || ""
+		})
+	
 	} catch (error) {
 		logger.error("Error en GET /admin/panel", error)
 		res.status(500).send("Error cargando el panel de administración")

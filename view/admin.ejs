@@ -4,23 +4,167 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+		<link 
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+		
+		<link rel="stylesheet" href="/style.css">
+
+		<link rel="stylesheet" href="/styleAdmin.css">
+
 		<title>Panel de administración</title>
 	</head>
 
 	<body>
 		<h1>Panel de administración privado</h1>
 
+		<h2 style="padding-left: 1rem;">Haz clic sobre los campos resaltados para editarlos</h2>
+
+		<button id="btnSave" class="btn btn-success">Guardar perfil</button>
+
 		<label>
-			Descripción del perfil:
-			<textarea id="about"></textarea>
+			Foto de perfil:
+			<input type="file" id="profileImage" data-field="profileImage">
 		</label>
 
 		<label>
-			Biografía corta del perfil:
-			<textarea id="bio"></textarea>
+			CV:
+			<input type="file" id="cvFile" data-field="cvFile">
 		</label>
 
-		<button id="submitBtn">Guardar y subir</button>
+
+		<header>
+			<h1>Moisés Morente</h1>
+
+			<ul id="menu">
+				<li><a href="/cv.pdf" download>Descargar CV</a></li>
+				<li><a href="https://github.com/rusker86" target="_blank" rel="noopener">Github</a></li>
+				<li><a href="#proyectos">Proyectos</a></li>
+<!--				<li><a href="#contacto">Contacto</a></li> -->
+			</ul>
+
+			<div class="btn-container">
+				<img
+					id="btn-menu" 
+					src="/images/show-menu.svg" 
+					alt="mostrar menú"
+				>
+			</div>
+		</header>
+
+		<main>
+			<h2>Sobre mi</h2>
+
+			<article id="presentacion">
+				<div class="img-container">
+					<img
+						id="img"
+						src="/photo.jpeg" 
+						alt="Retrato de Moisés Morente, programador"
+						loading="lazy"
+					>
+				</div>
+					<p contenteditable data-field="about" id="about">
+						<%= about %>
+				</p>
+			</article>
+
+			<img
+				id="btn-bajar"
+				src="/images/arrow-down.svg"
+				alt="bajar"
+			>
+
+			<!--TODO: Automatizar sección de proyectos-->
+			<article id="proyectos">
+				<br>
+
+				<h2 id="proyectos" class="mb-4">Proyectos destacados</h2>
+
+				<div class="row">
+					<!-- Card 1 -->
+					<div class="col-md-6 mb-6 proyecto">
+						<div class="card h-100">
+							<div class="row g-0">
+								<div class="col-md-4">
+									<img src="https://picsum.photos/seed/picsum/200/300" class="img-fluid rounded-start" alt="Proyecto 1">
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title">Experimento sobre False Sharing</h5>
+										<p class="card-text">
+											Experimento sobre los efectos del false sharing en el rendimiento de software nativo
+											El experimento demostró que conocer como se estructura la memoria a nivel de caché
+											es importante a la hora de desarrollar software de alto rendimiento.
+
+											<p><a href="https://github.com/rusker86/Experimento-false-sharing" class="link-dark">Enlace al repositorio de github</a></p>
+
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Card 2 -->
+					<div class="col-md-6 mb-6 proyecto">
+						<div class="card h-100">
+							<div class="row g-0">
+								<div class="col-md-4">
+									<img src="https://picsum.photos/seed/picsum/200/300" class="img-fluid rounded-start" alt="Proyecto 2">
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title">Interprete de máquina de pila abstracta</h5>
+										<p class="card-text">
+											Interprete de una máquina de pila abstracta que incluye tanto un modo de ejecución del
+											código mediante la carga de un fichero con el programa o la ejecución paso a paso
+											mediante un interprete. Desarrollado con el propósito de aprender y entender el funcionamiento de
+											un compilador.
+
+											<p><a href="https://github.com/rusker86/abstract_stack_machine_simulator" class="link-dark">Enlace al repositorio de github</a></p>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</main>
+
+		<footer class="text-center text-lg-start bg-light text-muted mt-5">
+
+			<!-- Texto principal -->
+			<section class="">
+				<div class="container text-center text-md-start mt-4">
+					<div class="row mt-3">
+						<div class="col-md-6 col-lg-6 col-xl-6 mx-auto mb-4">
+							<h6 class="text-uppercase fw-bold mb-3">Sobre mí</h6>
+							<p contenteditable data-field="bio">
+								<%= bio %>
+							</p>
+						</div>
+
+						<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+							<h6 class="text-uppercase fw-bold mb-3">Enlaces útiles</h6>
+							<p><a href="#proyectos" class="text-reset">Proyectos</a></p>
+<!--					<p><a href="#proyectos" class="text-reset">Proyectos</a></p> -->
+							<p><a href="/docs/cv.pdf" class="text-reset" download>Descargar CV</a></p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</footer>
+
+
+		<script src="/main.js" type="module"></script>
+
+
 
 		<script src="/script.js"></script>
 	</body>

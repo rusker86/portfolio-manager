@@ -1,0 +1,31 @@
+[contenteditable] {
+  border: 1px solid red;       /* borde rojo */
+  padding: 4px 6px;            /* espacio interno */
+  border-radius: 4px;           /* bordes redondeados */
+  min-height: 24px;             /* altura mínima */
+  line-height: 1.4;             /* para que el texto no quede pegado */
+
+  width: 100%;                  /* que ocupe todo el ancho del contenedor */
+  transition: all 0.2s ease;    /* transición suave al enfocar */
+  cursor: text;                 /* cambia cursor al editar */
+}
+
+/* Quitar márgenes internos de elementos hijos como <p> */
+[contenteditable] p {
+  margin: 0;
+	padding: 0;
+}
+
+/* Resaltar cuando el usuario hace foco */
+[contenteditable]:focus {
+  outline: 2px solid darkred;    /* borde más fuerte al foco */
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.3); /* ligera sombra */
+  background-color: #fffef0;     /* ligero cambio de fondo opcional */
+}
+
+/* Opcional: cambiar el cursor al pasar por encima */
+[contenteditable]:hover {
+  border-color: darkred;
+}
+
+.btn { margin: 1rem; }
