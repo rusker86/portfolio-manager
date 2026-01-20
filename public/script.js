@@ -27,8 +27,5 @@ btnSubmit.addEventListener("click", async e => {
 
 		alert(data.message)
 
-	} catch(err) {
-		alert(err)
-	}
-
+	} catch(err) { alert(err) }
 })

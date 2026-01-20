@@ -1,0 +1,7 @@
+{
+  "table": "profile",
+  "fields": {
+    "about": { "type": "text", "max": 5000 },
+    "bio": { "type": "text", "max": 100 }
+  }
+}
