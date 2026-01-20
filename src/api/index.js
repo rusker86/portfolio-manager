@@ -1,18 +1,18 @@
 import express from "express"
 import path from "path"
-import {
-	handleCreateProfile,
-	handleGetAllProfiles,
-	handleGetLastProfile,
-	handleGetProfileById
-} from "../controller/controllerProfile.js"
-import { initializeDataBase, createDbConnection } from "../db/sqliteClient.js"
+import "dotenv/config"
+import { initializeDataBase, closeDbConnection } from "../db/sqliteClient.js"
 
+import routerFront from "../routes/routesFront.js"
+import routerAdmin from "../routes/routerAdmin.js"
+import routerApi from "../routes/routerApi.js"
+import { logger } from "../utils/logger.js"
 
 const app = express()
+const PORT = process.env.PORT || 3000
 
-const db = createDbConnection()
-initializeDataBase(db)
+// Inicializar BD
+initializeDataBase()
 
 app.set("view engine", "ejs")
 app.set("views", path.join(process.cwd(), "view"))
@@ -21,44 +21,31 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(process.cwd(), "public")))
 
-app.get("/", async (req, res) => {
-	try {
-		const lastProfile = await handleGetLastProfile()
+app.use("/", routerFront)
+app.use("/admin", routerAdmin)
+app.use("/api", routerApi)
 
-		res.render("portfolio/index", {
-			about: lastProfile?.about || "",
-			bio: lastProfile?.bio || ""
-		})
-	} catch (error) {
-		console.error(error)
-		res.status(500).send("Error cargando el perfil")
-	}
+// Manejo de rutas no encontradas
+app.use((req, res) => {
+	res.status(404).json({ message: "Ruta no encontrada" })
 })
 
-
-app.get("/admin-panel", (req, res) => {
-	res.render("admin")
+// Manejo de errores global
+app.use((err, req, res, next) => {
+	logger.error("Error global:", err)
+	res.status(500).json({ message: "Error interno del servidor" })
 })
 
-app.post("/api/create-profile", async (req, res) => {
-	const { about, bio } = req.body
-
-	if (!about || !bio) {
-		return res.status(400).json({
-			message: "La descripción y la bio son obligatorias"
-		})
-	}
-
-	try {
-		await handleCreateProfile({ about, bio })
-		res.status(201).json({ message: "Perfil creado correctamente" })
-	} catch (error) {
-		console.error(error)
-		res.status(500).json({ message: "Error al guardar el perfil" })
-	}
+const server = app.listen(PORT, () => {
+	logger.info(`Servidor escuchando en localhost:${PORT}`)
 })
 
-
-app.listen(3000, () => {
-	console.log("Servidor escuchando en localhost:3000")
+// Graceful shutdown
+process.on("SIGTERM", () => {
+	logger.info("SIGTERM recibido, cerrando servidor...")
+	server.close(() => {
+		logger.info("Servidor cerrado")
+		closeDbConnection()
+		process.exit(0)
+	})
 })

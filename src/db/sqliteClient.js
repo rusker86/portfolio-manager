@@ -1,28 +1,40 @@
 import sqlite3 from "sqlite3"
 import path from "path"
-import fs from  "fs"
+import fs from "fs"
+import { logger } from "../utils/logger.js"
 
 sqlite3.verbose()
 
-const DATA_DIR = path.join(process.cwd(), "data")
-const DB_PATH = path.join(DATA_DIR, "dataBase.db")
+const DATA_DIR = path.join(process.cwd(), process.env.DB_PATH || "data")
+const DB_PATH = path.join(DATA_DIR)
 
-export function createDbConnection() {
-	if (!fs.existsSync(DATA_DIR)) {
-		fs.mkdirSync(DATA_DIR, { recursive: true })
-		console.log("Carpeta data creada")
+let dbInstance = null
+
+export function getDbConnection() {
+	if (dbInstance) {
+		return dbInstance
 	}
 
-	const db = new sqlite3.Database(DB_PATH, err => {
-		if(err) { console.error(err) }
-		else { console.log("Conexión abierta") }
+	if (!fs.existsSync(DATA_DIR)) {
+		fs.mkdirSync(DATA_DIR, { recursive: true })
+		logger.info("Carpeta data creada")
+	}
+
+	dbInstance = new sqlite3.Database(DB_PATH, err => {
+		if (err) {
+			logger.error("Error conectando a la BD", err)
+			logger.error(DB_PATH)
+		} else {
+			logger.info("Conexión a BD establecida")
+		}
 	})
 
-	return db
+	return dbInstance
 }
 
-export function initializeDataBase(db) {
-	const createShopTableSQL = `
+export function initializeDataBase() {
+	const db = getDbConnection()
+	const createProfileTableSQL = `
 		CREATE TABLE IF NOT EXISTS "profile" (
 			"id"	INTEGER,
 			"about"	TEXT NOT NULL,
@@ -32,9 +44,25 @@ export function initializeDataBase(db) {
 	`
 
 	db.serialize(() => {
-		db.run(createShopTableSQL, err => {
-			if(err) { console.error("Error creando la tabla 'Profile'") }
-			else { console.log("Tabla 'Profile' creada / Verificada correctamente") }
+		db.run(createProfileTableSQL, err => {
+			if (err) {
+				logger.error("Error creando la tabla 'Profile'", err)
+			} else {
+				logger.info("Tabla 'Profile' creada / Verificada correctamente")
+			}
 		})
 	})
+}
+
+export function closeDbConnection() {
+	if (dbInstance) {
+		dbInstance.close(err => {
+			if (err) {
+				logger.error("Error cerrando BD", err)
+			} else {
+				logger.info("Conexión a BD cerrada")
+			}
+		})
+		dbInstance = null
+	}
 }
