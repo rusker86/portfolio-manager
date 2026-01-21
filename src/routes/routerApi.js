@@ -4,7 +4,12 @@ import fs from "fs"
 import path from "path"
 
 import { handleCreateProfile } from "../controller/controllerProfile.js"
-import { validateProfileInput } from "../middleware/validateProfile.js"
+
+import {
+	validateProfileInput,
+	validateProject
+} from "../middleware/validateProfile.js"
+
 import { logger } from "../utils/logger.js"
 import { fileURLToPath } from "url"
 
@@ -28,6 +33,10 @@ routerApi.post("/create-profile", validateProfileInput, async (req, res) => {
 		logger.error("Error en POST /api/create-profile", error)
 		res.status(500).json({ message: "Error al guardar el perfil" })
 	}
+})
+
+routerApi.post("", validateProject, async (req, res) => {
+	//TODO: Crear inserción de proyectos
 })
 
 routerApi.post("/upload-file", upload.single("file"), (req, res) => {
