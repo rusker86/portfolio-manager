@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for routes/routesFront.js</title>
+    <title>Code coverage report for middleware/validateProject.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">routes</a> routesFront.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">middleware</a> validateProject.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
@@ -94,8 +94,13 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -106,57 +111,70 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express from "express"
-import path from "path"
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+	isNonEmptyString,
+	hadMinLen,
+	isTypeString,
+	isURLValid
+} from "./helpers/validateString.js"
 &nbsp;
-import {
-	handleCreateProfile,
-	handleGetAllProfiles,
-	handleGetLastProfile,
-	handleGetProfileById
-} from "../controller/controllerProfile.js"
-import { logger } from "../utils/logger.js"
+import { sendError } from "./helpers/sendError.js"
 &nbsp;
-const routerFront = <span class="cstat-no" title="statement not covered" >express()</span>
+export function <span class="fstat-no" title="function not covered" >validateProject(</span>req, res, next) {
+	const MIN_LENGTH_TITLE = <span class="cstat-no" title="statement not covered" >10</span>
+	const MIN_LENGTH_DESCRIPTION = <span class="cstat-no" title="statement not covered" >20</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >routerFront.set("view engine", "ejs")</span>
-<span class="cstat-no" title="statement not covered" >routerFront.set("views", path.join(process.cwd(), "view"))</span>
+	const { title, description, url } = <span class="cstat-no" title="statement not covered" >req.body</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >routerFront.get("/", <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >	try {</span>
-		const lastProfile = <span class="cstat-no" title="statement not covered" >await handleGetLastProfile()</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >		res.render("portfolio/index", {</span>
-			about: lastProfile?.about || "",
-			bio: lastProfile?.bio || ""
-		})
-	} catch (error) {
-<span class="cstat-no" title="statement not covered" >		logger.error("Error en GET /", error)</span>
-<span class="cstat-no" title="statement not covered" >		res.status(500).send("Error cargando el perfil")</span>
+<span class="cstat-no" title="statement not covered" >	if(!isNonEmptyString(title) || !isNonEmptyString(description)) {</span>
+<span class="cstat-no" title="statement not covered" >		return sendError(res, "El título y la descripción son obligatorios")</span>
 	}
-})
 &nbsp;
-export default routerFront
-&nbsp;</pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >	if(!isTypeString(title) || !isTypeString(description)) {</span>
+<span class="cstat-no" title="statement not covered" >		return sendError(res, "El tipo de dato debe ser un string")</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if(hadMinLen(title, MIN_LENGTH_TITLE)) {</span>
+<span class="cstat-no" title="statement not covered" >		return sendError(res, `La longitud mínima de caracteres del título debe ser de ${MIN_LENGTH_TITLE}`)</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if(!hadMinLen(description, MIN_LENGTH_DESCRIPTION)) {</span>
+<span class="cstat-no" title="statement not covered" >		return sendError(res, `La longitud mínima de caracteres de la descripción debe ser de ${MIN_LENGTH_DESCRIPTION}`)</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if(!isURLValid(url)) {</span>
+<span class="cstat-no" title="statement not covered" >		return sendError(res, "La url no es válida")</span>
+	}
+	
+<span class="cstat-no" title="statement not covered" >	next()</span>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
