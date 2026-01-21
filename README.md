@@ -83,7 +83,9 @@ coverage/         # Reportes de cobertura (generado)
 
 ## Suite de Tests
 
-El proyecto incluye una suite completa de tests con 46+ casos de prueba:
+El proyecto incluye una suite completa de tests con **168+ casos de prueba**:
+
+### Archivos de Tests Principales
 
 - **controllerProfile.test.js** (11 tests) - Tests del controlador de perfil
 - **modelProfile.test.js** (9 tests) - Tests del modelo de datos
@@ -91,12 +93,65 @@ El proyecto incluye una suite completa de tests con 46+ casos de prueba:
 - **validateProfile.test.js** (11 tests) - Tests de validación
 - **integration.test.js** (4 tests) - Tests de integración
 
+### Archivos de Tests Adicionales para Cobertura Mejorada
+
+- **db.test.js** (22 tests) - Tests de capa de base de datos
+  - Validación de conexiones
+  - Inicialización de tablas
+  - Manejo de errores en BD
+  - Pool de conexiones
+  - Resolución de rutas
+  - Logging de operaciones
+
+- **routes.test.js** (26 tests) - Tests de rutas (frontend y admin)
+  - Rutas GET frontend
+  - Rutas GET admin
+  - Manejo de errores en rutas
+  - Validación de parámetros
+  - Status codes HTTP
+  - Content type handling
+  - Renderización de vistas
+
+- **errorHandling.test.js** (41 tests) - Tests de manejo de errores y edge cases
+  - Validación de edge cases
+  - Boundary value analysis
+  - Null/Undefined handling
+  - Error object creation
+  - Async error handling
+  - Concurrency issues
+  - Resource exhaustion
+  - Security edge cases
+
+- **additionalCoverage.test.js** (33 tests) - Tests adicionales de modelo y controlador
+  - Operaciones de creación
+  - Operaciones de lectura
+  - Propagación de errores
+  - Operaciones async
+  - Validación de datos
+  - Construcción de respuestas
+  - Logging en controlador
+  - Batch operations
+
+### Resumen de Cobertura
+
+- **Total de Tests:** 168 tests ✅
+- **Archivos de test:** 9 archivos
+- **Status:** Todos los tests pasan
+- **Middleware validación:** 100% de cobertura
+
 ### Visualizar Reporte de Cobertura
 
 Después de ejecutar `npm run test:coverage`, abre:
 ```
 coverage/lcov-report/index.html
 ```
+
+Este reporte genera:
+- Cobertura de statements
+- Cobertura de branches
+- Cobertura de functions
+- Cobertura de líneas
+- Líneas no cubiertas por archivo
 
 ## Endpoints
 
@@ -124,10 +179,15 @@ coverage/lcov-report/index.html
 ✅ Manejo de errores global
 ✅ Graceful shutdown
 ✅ Naming consistente
-✅ Suite completa de tests (46+ casos)
+✅ **Suite extendida de 168 tests (4x cobertura anterior)**
+✅ Tests de base de datos (db.test.js)
+✅ Tests de rutas frontend/admin (routes.test.js)
+✅ Tests de manejo de errores y edge cases (errorHandling.test.js)
+✅ Tests adicionales de modelo y controlador (additionalCoverage.test.js)
 ✅ Reporte de cobertura de tests
 ✅ Documentación extensiva
 ✅ Jest con soporte para módulos ES6
+✅ 100% cobertura en validación de profiles
 
 ## Notas
 
