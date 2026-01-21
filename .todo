@@ -1,0 +1,10 @@
+	[] Sección de proyectos
+		- Editar la información de los proyectos
+		- Hacer que se pueda reordenar
+			- Investigar Drag and Drop
+
+	[] Seguridad del panel de administración
+		- Investigar como lo hacen otros CMSs
+			- ¿OAuth?
+			- ¿JWT?
+			- ¿Password?
