@@ -18,13 +18,17 @@ routerFront.get("/", async (req, res) => {
 	try {
 		const lastProfile = await handleGetLastProfile()
 
+		if (!lastProfile) {
+			return res.status(404).render("portfolio/404")
+		}
+
 		res.render("portfolio/index", {
 			about: lastProfile?.about || "",
 			bio: lastProfile?.bio || ""
 		})
 	} catch (error) {
 		logger.error("Error en GET /", error)
-		res.status(500).send("Error cargando el perfil")
+		res.status(500).render("portfolio/500")
 	}
 })
 
