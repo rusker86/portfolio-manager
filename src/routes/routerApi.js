@@ -5,10 +5,8 @@ import path from "path"
 
 import { handleCreateProfile } from "../controller/controllerProfile.js"
 
-import {
-	validateProfileInput,
-	validateProject
-} from "../middleware/validateProfile.js"
+import { validateProfileInput } from "../middleware/validateProfile.js"
+import { validateProject } from "../middleware/validateProject.js"
 
 import { logger } from "../utils/logger.js"
 import { fileURLToPath } from "url"

@@ -34,11 +34,23 @@ export function getDbConnection() {
 
 export function initializeDataBase() {
 	const db = getDbConnection()
+
 	const createProfileTableSQL = `
 		CREATE TABLE IF NOT EXISTS "profile" (
 			"id"	INTEGER,
 			"about"	TEXT NOT NULL,
 			"bio"	TEXT NOT NULL,
+			PRIMARY KEY("id" AUTOINCREMENT)
+		);
+	`
+
+	const createProjectTableSQL = `
+		CREATE TABLE IF NOT EXISTS "project"(
+			"id" INTEGER,
+			"title" TEXT NOT NULL,
+			"description" TEXT NOT NULL,
+			"url" TEXT NOT NULL,
+
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);
 	`
@@ -49,6 +61,16 @@ export function initializeDataBase() {
 				logger.error("Error creando la tabla 'Profile'", err)
 			} else {
 				logger.info("Tabla 'Profile' creada / Verificada correctamente")
+			}
+		})
+	})
+
+	db.serialize(() => {
+		db.run(createProjectTableSQL, err => {
+			if(err) {
+				logger.error("Error creando la tabla 'Project'", err)
+			} else {
+				logger.info("Tabla 'Project' creada / verificada correctamente")
 			}
 		})
 	})
