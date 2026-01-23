@@ -1,4 +1,6 @@
 import { getDbConnection } from "../db/sqliteClient.js"
-import { logger } from "../utils/logger.js"
+import { createLogger } from "logger"
+
+const logger = createLogger({logFilePath: "Logs"})
 
 

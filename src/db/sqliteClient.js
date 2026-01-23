@@ -1,7 +1,9 @@
 import sqlite3 from "sqlite3"
 import path from "path"
 import fs from "fs"
-import { logger } from "../utils/logger.js"
+import { createLogger } from "logger"
+
+const logger = createLogger({logFilePath: "Logs"})
 
 sqlite3.verbose()
 
@@ -15,16 +17,12 @@ export function connectDB() {
 	return new Promise((resolve, reject) => {
 
 		const dbPath = "src/data/dataBase.db"
-	
-		if(!fs.existsSync(dbPath)) {
-			return reject(new Error("Archivo de base de datos no existe"))
-		}
-
 		db = new sqlite3.Database("src/data/dataBase.db", err => {
 			err ? reject(err) : resolve(db)
 		})
 	})
 }
+
 
 export function getDB() {
 	if(!db) {
@@ -32,57 +30,53 @@ export function getDB() {
 		error.statusCode = 500
 		throw error
 	}
-
 	return db
 }
 
+
 export function initializeDataBase() {
-	try {
-		const db = getDB()
 
-		const createProfileTableSQL = `
-			CREATE TABLE IF NOT EXISTS "profile" (
-				"id"	INTEGER,
-				"about"	TEXT NOT NULL,
-				"bio"	TEXT NOT NULL,
-				PRIMARY KEY("id" AUTOINCREMENT)
-			);
-		`
+	const db = getDB()
 
-		const createProjectTableSQL = `
-			CREATE TABLE IF NOT EXISTS "project"(
-				"id" INTEGER,
-				"title" TEXT NOT NULL,
-				"description" TEXT NOT NULL,
-				"url" TEXT NOT NULL,
+	const createProfileTableSQL = `
+		CREATE TABLE IF NOT EXISTS "profile" (
+			"id"	INTEGER,
+			"about"	TEXT NOT NULL,
+			"bio"	TEXT NOT NULL,
+			PRIMARY KEY("id" AUTOINCREMENT)
+		);
+	`
 
-				PRIMARY KEY("id" AUTOINCREMENT)
-			);
-		`
+	const createProjectTableSQL = `
+		CREATE TABLE IF NOT EXISTS "project"(
+			"id" INTEGER,
+			"title" TEXT NOT NULL,
+			"description" TEXT NOT NULL,
+			"url" TEXT NOT NULL,
 
-		db.serialize(() => {
-			db.run(createProfileTableSQL, err => {
-				if (err) {
-					logger.error("Error creando la tabla 'Profile'", err)
-				} else {
-					logger.info("Tabla 'Profile' creada / Verificada correctamente")
-				}
-			})
+			PRIMARY KEY("id" AUTOINCREMENT)
+		);
+	`
+
+	db.serialize(() => {
+		db.run(createProfileTableSQL, err => {
+			if (err) {
+				logger.error("Error creando la tabla 'Profile'", err)
+			} else {
+				logger.info("Tabla 'Profile' creada / Verificada correctamente")
+			}
 		})
+	})
 
-		db.serialize(() => {
-			db.run(createProjectTableSQL, err => {
-				if(err) {
-					logger.error("Error creando la tabla 'Project'", err)
-				} else {
-					logger.info("Tabla 'Project' creada / verificada correctamente")
-				}
-			})
+	db.serialize(() => {
+		db.run(createProjectTableSQL, err => {
+			if(err) {
+				logger.error("Error creando la tabla 'Project'", err)
+			} else {
+				logger.info("Tabla 'Project' creada / verificada correctamente")
+			}
 		})
-	} catch (error) {
-		logger.warn("No se pudo inicializar las tablas:", error.message)
-		logger.info("Las tablas se inicializarán cuando la base de datos esté disponible")
-	}
+	})
 }
 
 export function closeDbConnection() {

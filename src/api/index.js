@@ -6,7 +6,9 @@ import { connectDB, initializeDataBase } from "../db/sqliteClient.js"
 import routerFront from "../routes/routesFront.js"
 import routerAdmin from "../routes/routerAdmin.js"
 import routerApi from "../routes/routerApi.js"
-import { logger } from "../utils/logger.js"
+import { createLogger } from "logger"
+
+const logger = createLogger({logFilePath: "Logs"})
 
 const app = express()
 const PORT = process.env.PORT || 3000

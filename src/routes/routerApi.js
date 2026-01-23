@@ -8,8 +8,11 @@ import { handleCreateProfile } from "../controller/controllerProfile.js"
 import { validateProfileInput } from "../middleware/validateProfile.js"
 import { validateProject } from "../middleware/validateProject.js"
 
-import { logger } from "../utils/logger.js"
 import { fileURLToPath } from "url"
+import { createLogger } from "logger"
+
+
+const logger = createLogger({logFilePath: "Logs"})
 
 const routerApi = express()
 

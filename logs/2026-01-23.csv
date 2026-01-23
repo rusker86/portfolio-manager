@@ -1,0 +1,7 @@
+2026-01-23T10:16:42.987Z,[INFO],Base de datos conectada (index.js:29),
+2026-01-23T10:16:42.993Z,[INFO],Servidor escuchando en localhost:3000 (index.js:44),
+2026-01-23T10:16:43.016Z,[INFO],Tabla 'Profile' creada / Verificada correctamente (sqliteClient.js:71),
+2026-01-23T10:16:43.025Z,[INFO],Tabla 'Project' creada / verificada correctamente (sqliteClient.js:81),
+2026-01-23T10:16:58.905Z,[DEBUG],Último perfil obtenido (modelProfile.js:109),
+2026-01-23T10:17:08.372Z,[DEBUG],Último perfil obtenido (modelProfile.js:109),
+2026-01-23T10:17:08.373Z,[ERROR],Error en GET /admin/panel (routerAdmin.js:29),

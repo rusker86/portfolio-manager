@@ -7,7 +7,9 @@ import {
 	handleGetLastProfile,
 	handleGetProfileById
 } from "../controller/controllerProfile.js"
-import { logger } from "../utils/logger.js"
+import { createLogger } from "logger"
+
+const logger = createLogger({logFilePath: "Logs"})
 
 const routerFront = express()
 

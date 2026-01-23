@@ -4,7 +4,9 @@ import {
 	getProfileById,
 	getLastProfile
 } from "../model/modelProfile.js"
-import { logger } from "../utils/logger.js"
+import { createLogger } from "logger"
+
+const logger = createLogger({logFilePath: "Logs"})
 
 export async function handleCreateProfile({ about, bio }) {
 	if (!about || !bio) {

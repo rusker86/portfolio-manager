@@ -19,6 +19,7 @@
     "dotenv": "^16.3.1",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
+    "logger": "github:rusker86/logger",
     "multer": "^2.0.2",
     "sqlite3": "^5.1.7"
   },

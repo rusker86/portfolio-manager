@@ -1,10 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
 
 jest.mock('../src/db/sqliteClient.js');
-jest.mock('../src/utils/logger.js');
 
 import { createProfile, getAllProfiles, getProfileById, getLastProfile } from '../src/model/modelProfile.js';
-import { logger } from '../src/utils/logger.js';
 
 describe('Profile Model', () => {
   beforeEach(() => {
